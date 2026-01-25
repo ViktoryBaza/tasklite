@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
   <head>
     <meta charset="utf-8" />
@@ -19,6 +19,29 @@
     </header>
     <main class="container">
       <h1 class="page-title">Задачи</h1>
+      <div class="form-add">
+        <input
+          class="form-add__input"
+          type="text"
+          placeholder="Введите задачу"
+        />
+        <button class="form-add__button" type="button">Добавить</button>
+      </div>
+      <div class="toolbar">
+        <input class="toolbar__search" type="text" placeholder="Поиск задач…" />
+        <div class="tabs toolbar__tabs">
+          <button class="tabs__item tabs__item--active" type="button">
+            Все
+          </button>
+          <button class="tabs__item" type="button">Активные</button>
+          <button class="tabs__item" type="button">Завершённые</button>
+        </div>
+        <select class="toolbar__sort">
+          <option selected>Сначала старые</option>
+          <option>Сначала новые</option>
+        </select>
+      </div>
     </main>
+    <script src="script.js"></script>
   </body>
 </html>
