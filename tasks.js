@@ -8,38 +8,39 @@ const sortSelect = document.querySelector(".toolbar__sort");
 const tabButtons = document.querySelectorAll(".tabs__item");
 
 const clearButton = document.querySelector('.footer-controls__clear'); 
+
+
 const form = document.querySelector(".form-add");
 
-//const tasks = [];
-let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+let tasks = JSON.parse(localStorage.getItem('tasks')) || []; 
 function saveTasks() {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-}
-
+  localStorage.setItem('tasks', JSON.stringify(tasks));  
+} 
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   addTask();
 });
+
 clearButton.addEventListener('click', () => {
   tasks = tasks.filter(task => !task.done);
+  saveTasks();  
   renderAll();
 });
 function updateCounters() {
   const total = tasks.length;
   const active = tasks.filter(t => !t.done).length;
   const done = tasks.filter(t => t.done).length;
-  clearButton.disabled = tasks.every(task => !task.done);
+  clearButton.disabled = tasks.every(task => !task.done);  
   const counters = document.querySelector('.footer-controls__counters');
   if (counters) {
     counters.innerHTML = `
-    <span>Всего: ${total}</span>
-    <span>Активных: ${active}</span>
-    <span>Выполненных: ${done}</span>
+      <span>Всего: ${total}</span>
+      <span>Активных: ${active}</span>
+      <span>Выполненных: ${done}</span>
     `;
   }
 }
-
 
 function addTask() {
   const text = input.value.trim();
@@ -62,7 +63,7 @@ function addTask() {
 
 function renderTask(taskData) {
   const item = document.createElement("div");
-  item.classList.add("task__todo");
+  item.classList.add("task");
   const content = document.createElement("div");
   content.classList.add("task__content");
   item.append(content);
@@ -106,7 +107,7 @@ function renderTask(taskData) {
     const newText = prompt("Изменить задачу:", taskData.text);
     if (newText && newText.trim() !== "") {
       taskData.text = newText.trim();
-      saveTasks();
+      saveTasks();   
       renderAll();
     }
   });
@@ -135,14 +136,14 @@ function renderTask(taskData) {
   deleteBtn.addEventListener("click", () => {
     const index = tasks.indexOf(taskData);
     tasks.splice(index, 1);
-    saveTasks();
+    saveTasks();    
     renderAll();
   });
 
   item.addEventListener("click", (e) => {
     if (e.target.closest(".task__action")) return;
     taskData.done = !taskData.done;
-    saveTasks();
+    saveTasks();    
     renderAll();
   });
   actions.append(editBtn, deleteBtn);
@@ -172,8 +173,10 @@ tabButtons.forEach((btn) => {
   });
 });
 
+
+
 function renderAll() {
-  document.querySelectorAll(".task__todo").forEach((t) => t.remove());
+  document.querySelectorAll(".task").forEach((t) => t.remove());
   let filtered = tasks.filter((task) => {
     if (currentFilter === "active") return !task.done;
     if (currentFilter === "done") return task.done;
@@ -221,5 +224,10 @@ function formatDate(date) {
   const min = date.getMinutes().toString().padStart(2, "0");
   return `${d}.${m}.${y}, ${h}:${min}`;
 }
+
+
+
+
+
 
 
